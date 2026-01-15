@@ -59,7 +59,7 @@ form.addEventListener('submit', async function (event) {
     const formProps = Object.fromEntries(formData);
 
     try {
-        const response = await fetch('/send-email', {
+        const response = await fetch('/.netlify/functions/send-email', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
