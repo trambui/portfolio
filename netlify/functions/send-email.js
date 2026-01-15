@@ -1,10 +1,15 @@
 const nodemailer = require('nodemailer');
-const fetch = require('node-fetch');
-const createDOMPurify = require('dompurify');
-const { JSDOM } = require('jsdom');
 
-const window = new JSDOM('').window;
-const DOMPurify = createDOMPurify(window);
+// 1. Simple, native sanitization
+const sanitize = (str) => {
+    if (!str) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+};
 
 const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -17,6 +22,7 @@ const transporter = nodemailer.createTransport({
 });
 
 exports.handler = async (event) => {
+    // Only allow POST
     if (event.httpMethod !== 'POST') {
         return { statusCode: 405, body: 'Method Not Allowed' };
     }
@@ -24,29 +30,38 @@ exports.handler = async (event) => {
     try {
         const data = JSON.parse(event.body);
 
-        const name = DOMPurify.sanitize(data.name);
-        const email = DOMPurify.sanitize(data.email);
-        const message = DOMPurify.sanitize(data.message);
+        // 2. Sanitize Inputs
+        const name = sanitize(data.name);
+        const email = sanitize(data.email);
+        const message = sanitize(data.message);
         const recaptchaToken = data['g-recaptcha-response'];
 
         if (!name || !email || !message || !recaptchaToken) {
             return { statusCode: 400, body: JSON.stringify({ message: 'Invalid input' }) };
         }
 
+        // 3. Verify reCAPTCHA
         const verifyUrl = `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET_KEY}&response=${recaptchaToken}`;
         const captchaRes = await fetch(verifyUrl, { method: 'POST' });
         const captchaData = await captchaRes.json();
 
         if (!captchaData.success) {
+            console.error('Captcha Failed:', captchaData);
             return { statusCode: 400, body: JSON.stringify({ message: 'CAPTCHA failed' }) };
         }
 
+        // 4. Send Email
         const mailOptions = {
             from: `"Portfolio Lead" <${process.env.EMAIL_USER}>`,
             to: process.env.EMAIL_TO,
             replyTo: email,
             subject: `New Message from ${name}`,
-            html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p>${message}</p>`
+            html: `
+                <h3>New Contact Form Submission</h3>
+                <p><strong>Name:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Message:</strong><br/>${message}</p>
+            `
         };
 
         await transporter.sendMail(mailOptions);
@@ -54,6 +69,6 @@ exports.handler = async (event) => {
 
     } catch (error) {
         console.error('Function Error:', error);
-        return { statusCode: 500, body: JSON.stringify({ message: 'Server Error' }) };
+        return { statusCode: 500, body: JSON.stringify({ message: 'Server Error: ' + error.message }) };
     }
 };
