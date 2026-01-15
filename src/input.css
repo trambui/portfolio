@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@source "../*.html"; 
+
+@theme {
+    --color-slate-850: #1e293b;
+    --color-slate-900: #0f172a;
+    --font-sans: "Inter", sans-serif;
+}
+
+.text-gradient {
+    @apply bg-clip-text text-transparent;
+    background-image: linear-gradient(to right, #0f172a, #0d9488);
+}
+
