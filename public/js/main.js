@@ -124,6 +124,11 @@ document.addEventListener('click', (e) => {
         eventParams.event_category = 'social';
         eventParams.event_label = 'LinkedIn Profile';
     }
+    // 4. Mailto links
+    else if (url.startsWith('mailto:')) {
+        eventName = 'generate_lead';
+        eventParams.method = 'email_link';
+    }
 
     if ((eventName !== 'click' || url.startsWith('http')) && typeof gtag === 'function') {
         gtag('event', eventName, eventParams);
