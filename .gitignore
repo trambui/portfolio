@@ -3,3 +3,4 @@ node_modules
 .DS_Store
 dist/output.css
 tailwindcss-macos-x64
+.netlify

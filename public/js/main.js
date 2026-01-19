@@ -134,3 +134,28 @@ document.addEventListener('click', (e) => {
         gtag('event', eventName, eventParams);
     }
 });
+
+// --- Dark Mode Logic ---
+const themeToggleBtn = document.getElementById('theme-toggle');
+const htmlElement = document.documentElement;
+
+// 1. Check local storage or system preference on load
+// If user has set specific theme OR (no preference saved AND system is dark)
+if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+    htmlElement.classList.add('dark');
+} else {
+    htmlElement.classList.remove('dark');
+}
+
+// 2. Handle toggle click
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+        if (htmlElement.classList.contains('dark')) {
+            htmlElement.classList.remove('dark');
+            localStorage.theme = 'light';
+        } else {
+            htmlElement.classList.add('dark');
+            localStorage.theme = 'dark';
+        }
+    });
+}
