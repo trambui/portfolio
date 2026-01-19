@@ -1,3 +1,27 @@
+// --- 0. Performance Optimization: Lazy Load reCAPTCHA ---
+const loadCaptcha = () => {
+    if (document.querySelector("script[src*='recaptcha']")) return;
+
+    const script = document.createElement('script');
+    script.src = 'https://www.google.com/recaptcha/api.js';
+    script.async = true;
+    script.defer = true;
+    document.body.appendChild(script);
+    console.log('reCAPTCHA loaded on demand.');
+};
+
+const userInteractionEvents = ['scroll', 'click', 'keydown', 'mousemove', 'touchstart'];
+
+const triggerScriptLoad = () => {
+    loadCaptcha();
+    userInteractionEvents.forEach(event => window.removeEventListener(event, triggerScriptLoad));
+};
+
+userInteractionEvents.forEach(event => {
+    window.addEventListener(event, triggerScriptLoad, { passive: true });
+});
+
+
 const GA_MEASUREMENT_ID = 'G-Z78W0HFX73';
 
 // Load the Google Tag script
