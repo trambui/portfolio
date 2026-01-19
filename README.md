@@ -16,17 +16,17 @@ The architecture focuses on:
 
 ## ✨ Key Features
 
-* **🎨 Dynamic Dark Mode:**** Persists user preference via `localStorage` and respects system preferences.
-* **⚡ Serverless Backend:**** Secure contact form handling using ****Netlify Functions**** and ****Nodemailer****.
-* **📊 Advanced Analytics (GA4):****
+* **🎨 Dynamic Dark Mode:** Persists user preference via `localStorage` and respects system preferences.
+* **⚡ Serverless Backend:** Secure contact form handling using **Netlify Functions** and **Nodemailer**.
+* **📊 Advanced Analytics (GA4):**
    * Custom event tracking for Resume Downloads (`file_download`).
    * Granular tracking for "GitHub" vs "Live Demo" clicks (`project_interaction`).
    * Unified lead tracking for Form Submits vs Mailto clicks (`generate_lead`).
-* **🛡️ Security & Anti-Spam:****
-   * Integrated ****Google reCAPTCHA v2**** (Lazy-loaded for performance).
+* **🛡️ Security & Anti-Spam:**
+   * Integrated **Google reCAPTCHA v2** (Lazy-loaded for performance).
    * Input sanitization on the backend to prevent XSS.
-   * Strict ****Content Security Policy (CSP)**** headers in `netlify.toml`.
-* **♿ Accessible (A11y):**** WCAG AA compliant with a high Lighthouse score.
+   * Strict **Content Security Policy (CSP)** headers in `netlify.toml`.
+* **♿ Accessible (A11y):** WCAG AA compliant with a high Lighthouse score.
 
 ## 🛠️ Tech Stack
 
