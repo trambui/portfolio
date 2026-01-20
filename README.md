@@ -14,6 +14,8 @@ The architecture focuses on:
 **Security:** CSP Headers, input sanitization, and reCAPTCHA.
 **Performance:** Lazy-loading and minification for fast mobile speeds.
 
+---
+
 ## ✨ Key Features
 
 * **🎨 Dynamic Dark Mode:** Persists user preference via `localStorage` and respects system preferences.
@@ -28,12 +30,16 @@ The architecture focuses on:
    * Strict **Content Security Policy (CSP)** headers in `netlify.toml`.
 * **♿ Accessible (A11y):** WCAG AA compliant with a high Lighthouse score.
 
+---
+
 ## 🛠️ Tech Stack
 
 * **Frontend:** HTML5, Vanilla JavaScript (ES6+), Tailwind CSS
 * **Backend:** Node.js (Netlify Functions)
 * **Styling:** Tailwind CSS (Class-strategy for Dark Mode)
 * **Tools:** PostCSS, Google Analytics 4, Lighthouse
+
+---
 
 ## ⚙️ Getting Started
 
@@ -46,36 +52,38 @@ The architecture focuses on:
 
 Clone the repository and install dependencies:
 
-```bash
-git clone https://github.com/trambui/portfolio.git  
-cd portfolio  
-npm install
-```
+  ```bash
+  git clone https://github.com/trambui/portfolio.git  
+  cd portfolio  
+  npm install
+  ```
 
 ### 2. Environment Variables
 
 Create a `.env` file in the root directory for local testing:
 
-```env
-EMAIL_USER=your-email@gmail.com  
-EMAIL_PASS=your-app-password  
-EMAIL_TO=destination-email@gmail.com  
-RECAPTCHA_SECRET_KEY=your-google-secret-key  
-```
+  ```env
+  EMAIL_USER=your-email@gmail.com  
+  EMAIL_PASS=your-app-password  
+  EMAIL_TO=destination-email@gmail.com  
+  RECAPTCHA_SECRET_KEY=your-google-secret-key  
+  ```
 
 ### 3. Running Locally
 
 **Terminal 1 (Tailwind Watcher):**
 
-```bash
-npm run watch:css  
-```
+  ```bash
+  npm run watch:css  
+  ```
 
 **Terminal 2 (Local Server):**
 
-```bash
-netlify dev  
-```
+  ```bash
+  netlify dev  
+  ```
+
+---
 
 ## 📊 Analytics Schema
 
@@ -88,6 +96,8 @@ Custom definitions configured in GA4:
 | file_download       | file_name    | "Tram_Bui_Resume.pdf"            |
 | generate_lead       | method       | "contact_form" vs "email_link"   |
 
+---
+
 ## 🚀 Deployment
 
 1.  Connect your GitHub repository to Netlify.
@@ -96,6 +106,11 @@ Custom definitions configured in GA4:
       * **Publish directory:** `.`
 3.  Add the **Environment Variables** in the Netlify Dashboard.
 
-## 📄 License
+---
 
-© 2026 Tram Bui. All rights reserved.
+## 🤝 Contribution & Contact
+
+This project is maintained by Tram Bui.
+
+* **LinkedIn:** https://www.linkedin.com/in/ttbui/
+* **Email:** tbtrambui@gmail.com
