@@ -125,7 +125,7 @@ document.addEventListener('click', (e) => {
     const linkText = link.innerText.trim();
 
     let eventName = 'click';
-    let eventParams = { transport_type: 'beacon', url: url };
+    let eventParams = { transport_type: 'beacon', link_url: url };
 
     // 1. Resume Downloads
     if (isDownload) {
