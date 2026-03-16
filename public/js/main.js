@@ -133,16 +133,14 @@ document.addEventListener('click', (e) => {
         eventParams.file_name = 'Tram_Bui_Resume.pdf';
         eventParams.file_extension = 'pdf';
     }
-    // 2. Project Interactions (GitHub/Demo)
-    else if (url.includes('github.com') || url.includes('onrender.com') || linkText.includes('Live Demo')) {
+    // 2. Project Interactions (GitHub/Demo/Plates & Places)
+    else if (url.includes('github.com') || url.includes('onrender.com') || url.includes('trambui.dev') || linkText.includes('Live Demo') || linkText.includes('View Project')) {
         eventName = 'project_interaction';
-
-        const isDemo = url.includes('onrender.com') || linkText.includes('Live Demo');
+        const isDemo = url.includes('onrender.com') || url.includes('trambui.dev') || linkText.includes('Live Demo') || linkText.includes('View Project');
         eventParams.link_type = isDemo ? 'Live Demo' : 'GitHub Code';
-
         eventParams.project_name = link.closest('article')?.querySelector('h4')?.innerText || 'Unknown Project';
     }
-    // 3. LinkedIn/Social
+    // 3. LinkedIn
     else if (url.includes('linkedin.com')) {
         eventName = 'outbound_click';
         eventParams.event_category = 'social';
@@ -152,6 +150,12 @@ document.addEventListener('click', (e) => {
     else if (url.startsWith('mailto:')) {
         eventName = 'generate_lead';
         eventParams.method = 'email_link';
+    }
+    // 5. CATCH-ALL
+    else if (url.startsWith('http') && !url.includes(window.location.hostname)) {
+        eventName = 'outbound_click';
+        eventParams.event_category = 'general_outbound';
+        eventParams.link_text = linkText || 'Unknown Text';
     }
 
     if ((eventName !== 'click' || url.startsWith('http')) && typeof gtag === 'function') {
